@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tadbiro/logic/blocs/auth/auth_bloc.dart';
-import 'package:tadbiro/ui/screens/widgets/textformfield_item.dart';
+import 'package:tadbiro/ui/widgets/textformfield_item.dart';
+import 'package:tadbiro/utils/colors.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -25,18 +26,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         context
             .read<AuthBloc>()
             .add(ResetPasswordAuthEvent(textEditingController.text));
-        // await authController.resetPassword(email: textEditingController.text);
-        // setState(() {
-        //   isSend = false;
-        // });
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   const SnackBar(
-        //       duration: Duration(seconds: 2),
-        //       content: Text('Password reset email sent')),
-        // );
-        // Future.delayed(const Duration(seconds: 3), () {
-        //   Navigator.pop(context);
-        // });
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -87,7 +76,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue,
+                    backgroundColor: AppColors.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

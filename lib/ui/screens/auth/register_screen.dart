@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tadbiro/logic/blocs/auth/auth_bloc.dart';
-import 'package:tadbiro/ui/screens/widgets/textformfield_item.dart';
+import 'package:tadbiro/ui/widgets/textformfield_item.dart';
+import 'package:tadbiro/utils/colors.dart';
 import 'package:tadbiro/utils/loading_dialog.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -206,7 +207,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             width: double.infinity,
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.blue,
+                                                  backgroundColor:
+                                                      AppColors.primaryColor,
                                                   foregroundColor:
                                                       Colors.white),
                                               child: const Text('Cancel'),
@@ -307,7 +309,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
+                      backgroundColor: AppColors.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -327,7 +329,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: const Text(
                         "Login",
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: AppColors.primaryColor,
                         ),
                       ),
                     )
