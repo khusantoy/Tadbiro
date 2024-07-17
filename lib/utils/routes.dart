@@ -3,4 +3,6 @@ class AppRoutes {
   static const String register = '/register';
   static const String resetPassword = '/reset-password';
   static const String home = '/home';
+  static const String notifications = '/notifications';
+  static const String details = '/details';
 }

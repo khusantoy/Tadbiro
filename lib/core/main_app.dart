@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tadbiro/ui/screens/auth/login_screen.dart';
 import 'package:tadbiro/ui/screens/auth/register_screen.dart';
 import 'package:tadbiro/ui/screens/auth/reset_password_screen.dart';
+import 'package:tadbiro/ui/screens/event_details_screen.dart';
 import 'package:tadbiro/ui/screens/home_screen.dart';
+import 'package:tadbiro/ui/screens/notificatioins_screen.dart';
 import 'package:tadbiro/utils/routes.dart';
 
 class MainApp extends StatelessWidget {
@@ -13,7 +15,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
@@ -33,6 +35,8 @@ class MainApp extends StatelessWidget {
           AppRoutes.login: (context) => const LoginScreen(),
           AppRoutes.register: (context) => const RegisterScreen(),
           AppRoutes.resetPassword: (context) => const ResetPasswordScreen(),
+          AppRoutes.notifications: (context) => const NotificatioinsScreen(),
+          AppRoutes.details: (context) => const EventDetailsScreen(),
         },
       ),
     );

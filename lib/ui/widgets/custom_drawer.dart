@@ -14,16 +14,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
       child: Column(
         children: [
           DrawerHeader(
-              child: Center(
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"),
+            child: Center(
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"),
+                ),
+                title: Text("Alisher Zokirov"),
+                subtitle: Text("alisherzokirov@gmail.com"),
               ),
-              title: Text("Alisher Zokirov"),
-              subtitle: Text("alisherzokirov@gmail.com"),
             ),
-          )),
+          ),
           Column(
             children: [
               ListTile(

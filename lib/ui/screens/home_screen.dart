@@ -15,7 +15,9 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, "/notifications");
+            },
             icon: const Icon(Icons.notifications_none_rounded),
           )
         ],
@@ -71,90 +73,95 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            SizedBox(
-              height: 200.h,
-              child: PageView(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.w),
-                    child: Container(
-                      height: 200.h,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            "https://wallpapers.com/images/hd/ocean-view-with-iceberg-penguins-jbr8tlmccjsoeaxt.jpg",
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/details");
+              },
+              child: SizedBox(
+                height: 200.h,
+                child: PageView(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      child: Container(
+                        height: 200.h,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              "https://wallpapers.com/images/hd/ocean-view-with-iceberg-penguins-jbr8tlmccjsoeaxt.jpg",
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
                         ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: Colors.white,
+                                  ),
+                                  padding: const EdgeInsets.all(3),
+                                  child: const Text("Linux Festival"),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.favorite_outline),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
                                   color: Colors.white,
+                                  borderRadius: BorderRadius.circular(4),
                                 ),
-                                padding: const EdgeInsets.all(3),
-                                child: const Text("Linux Festival"),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.favorite_outline),
+                                child: const Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text("12"),
+                                    Text("May"),
+                                  ],
                                 ),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: const Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text("12"),
-                                  Text("May"),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.w),
-                    child: Container(
-                      width: double.infinity,
-                      height: 200.h,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            "https://wallpapers.com/images/hd/ocean-view-with-iceberg-penguins-jbr8tlmccjsoeaxt.jpg",
+                              )
+                            ],
                           ),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      child: Container(
+                        width: double.infinity,
+                        height: 200.h,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              "https://wallpapers.com/images/hd/ocean-view-with-iceberg-penguins-jbr8tlmccjsoeaxt.jpg",
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -174,7 +181,7 @@ class HomeScreen extends StatelessWidget {
               height: 10.h,
             ),
             SizedBox(
-              height: (100.h + 20) * 4,
+              height: (100.h + 20.h) * 4,
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 4,
@@ -185,7 +192,7 @@ class HomeScreen extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       width: double.infinity,
-                      height: 100.h,
+                      height: 110.h,
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 2.w,
