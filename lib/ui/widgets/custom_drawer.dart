@@ -10,10 +10,10 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
-    return const Drawer(
+    return Drawer(
       child: Column(
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             child: Center(
               child: ListTile(
                 leading: CircleAvatar(
@@ -28,21 +28,24 @@ class _CustomDrawerState extends State<CustomDrawer> {
           Column(
             children: [
               ListTile(
-                leading: Icon(Icons.calendar_month),
-                title: Text("Mening tadbirlarim"),
-                trailing: Icon(Icons.arrow_forward_ios_rounded),
+                onTap: () {
+                  Navigator.pushNamed(context, "/events");
+                },
+                leading: const Icon(Icons.calendar_month),
+                title: const Text("Mening tadbirlarim"),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded),
               ),
-              ListTile(
+              const ListTile(
                 leading: Icon(Icons.person),
                 title: Text("Profil ma'lumotlari"),
                 trailing: Icon(Icons.arrow_forward_ios_rounded),
               ),
-              ListTile(
+              const ListTile(
                 leading: Icon(Icons.translate),
                 title: Text("Tilni o'zgartirish"),
                 trailing: Icon(Icons.arrow_forward_ios_rounded),
               ),
-              ListTile(
+              const ListTile(
                 leading: Icon(Icons.light_mode),
                 title: Text("Tungi/Kunduzgi holat"),
                 trailing: Icon(Icons.arrow_forward_ios_rounded),

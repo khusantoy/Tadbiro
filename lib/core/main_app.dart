@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tadbiro/ui/screens/add_event_screen.dart';
 import 'package:tadbiro/ui/screens/auth/login_screen.dart';
 import 'package:tadbiro/ui/screens/auth/register_screen.dart';
 import 'package:tadbiro/ui/screens/auth/reset_password_screen.dart';
 import 'package:tadbiro/ui/screens/event_details_screen.dart';
 import 'package:tadbiro/ui/screens/home_screen.dart';
+import 'package:tadbiro/ui/screens/my_events_screen.dart';
 import 'package:tadbiro/ui/screens/notificatioins_screen.dart';
 import 'package:tadbiro/utils/routes.dart';
 
@@ -37,6 +39,8 @@ class MainApp extends StatelessWidget {
           AppRoutes.resetPassword: (context) => const ResetPasswordScreen(),
           AppRoutes.notifications: (context) => const NotificatioinsScreen(),
           AppRoutes.details: (context) => const EventDetailsScreen(),
+          AppRoutes.events: (context) => const MyEventsScreen(),
+          AppRoutes.addEvent: (context) => const AddEventScreen(),
         },
       ),
     );
