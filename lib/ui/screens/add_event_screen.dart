@@ -31,6 +31,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
               decoration: const InputDecoration(
@@ -65,12 +66,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
               ),
             ),
             SizedBox(
+              height: 20.h,
+            ),
+            SizedBox(
               child: TextFormField(
                 controller: messageController,
                 onChanged: (value) {},
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Fill this space!";
+                    return "Maydonni to'ldiring!";
                   }
                   return null;
                 },
@@ -83,7 +87,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       width: 1,
                     ),
                     borderRadius: BorderRadius.all(
-                      Radius.circular(16.r),
+                      Radius.circular(5.r),
                     ),
                   ),
                   contentPadding: EdgeInsets.symmetric(
@@ -93,20 +97,20 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.r),
+                    borderRadius: BorderRadius.circular(5.r),
                     borderSide: BorderSide(
                       color: AppColors.primaryColor,
                       width: 1.w,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.r),
+                    borderRadius: BorderRadius.circular(5.r),
                     borderSide: BorderSide(
                       color: AppColors.primaryColor,
                       width: 1.w,
                     ),
                   ),
-                  hintText: "Message",
+                  hintText: "Tadbir xaqida ma'lumot:",
                   hintStyle: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
@@ -116,6 +120,58 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Text(
+              "Rasm yoki video yuklash",
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5 - 20.w,
+                  height: 100.h,
+                  child: const Card(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.camera),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text("Rasm"),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5 - 20.w,
+                  height: 100.h,
+                  child: const Card(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.videocam),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text("Video"),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
