@@ -9,6 +9,7 @@ import 'package:tadbiro/ui/screens/event_details_screen.dart';
 import 'package:tadbiro/ui/screens/home_screen.dart';
 import 'package:tadbiro/ui/screens/my_events_screen.dart';
 import 'package:tadbiro/ui/screens/notificatioins_screen.dart';
+import 'package:tadbiro/ui/screens/splash_screen.dart';
 import 'package:tadbiro/utils/routes.dart';
 
 class MainApp extends StatelessWidget {
@@ -22,16 +23,7 @@ class MainApp extends StatelessWidget {
       splitScreenMode: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const HomeScreen();
-            }
-
-            return const LoginScreen();
-          },
-        ),
+        home: SplashScreen(),
         routes: {
           AppRoutes.home: (context) => const HomeScreen(),
           AppRoutes.login: (context) => const LoginScreen(),

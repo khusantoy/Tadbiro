@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tadbiro/logic/blocs/auth/auth_bloc.dart';
 import 'package:tadbiro/ui/widgets/textformfield_item.dart';
@@ -56,36 +57,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _validateAndSubmit() async {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && imageFile != null) {
       LoadingDialog.showLoadingDialog(context);
       context.read<AuthBloc>().add(RegisterAuthEvent(usernameController.text,
           emailController.text, passwordController.text, imageFile!));
-      // await _authController
-      //     .register(
-      //   emailAddress: emailController.text,
-      //   password: passwordController.text,
-      // )
-      //     .then((user) {
-      //   addUser();
-      //   Navigator.pop(context);
-      // });
+    }
+
+    if (imageFile == null) {
+      Fluttertoast.showToast(
+          msg: "Iltimos profil uchun rasm yuklang",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
   }
-
-  // void addUser() async {
-  //   LoadingDialog.showLoadingDialog(context);
-  //   await context.read<UsersController>().addUser(
-  //       usernameController.text, emailController.text, "online", imageFile!);
-
-  //   if (context.mounted) {
-  //     usernameController.clear();
-  //     emailController.clear();
-  //     passwordController.clear();
-  //     confirmPasswordController.clear();
-  //     Navigator.pop(context);
-  //     Navigator.pop(context);
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -115,28 +102,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       Align(
                         alignment: Alignment.center,
-                        child: Container(
-                          width: 120,
-                          height: 120,
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            shape: BoxShape.circle,
-                          ),
-                          child: imageFile == null
-                              ? const Icon(
-                                  Icons.person,
-                                  size: 50,
-                                )
-                              : Image.file(
-                                  imageFile!,
-                                  fit: BoxFit.cover,
-                                ),
+                        child: CircleAvatar(
+                          backgroundImage: imageFile == null
+                              ? const AssetImage("assets/images/avatar.png")
+                              : FileImage(imageFile!),
+                          radius: 100,
                         ),
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: CircleAvatar(
+                          backgroundColor: AppColors.primaryColor,
                           child: IconButton(
                             onPressed: () {
                               showModalBottomSheet(
@@ -203,17 +179,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             height: 32,
                                           ),
                                           SizedBox(
-                                            height: 52,
                                             width: double.infinity,
+                                            height: 55,
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      AppColors.primaryColor,
-                                                  foregroundColor:
-                                                      Colors.white),
-                                              child: const Text('Cancel'),
+                                                foregroundColor: Colors.white,
+                                                backgroundColor:
+                                                    AppColors.primaryColor,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
                                               onPressed: () =>
                                                   Navigator.pop(context),
+                                              child: const Text("Cancel"),
                                             ),
                                           ),
                                         ],
@@ -223,6 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             icon: const Icon(
                               Icons.edit,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -318,23 +299,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: const Text("Register"),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text("If you already heave an account"),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                    )
-                  ],
-                )
               ],
             ),
           ),
