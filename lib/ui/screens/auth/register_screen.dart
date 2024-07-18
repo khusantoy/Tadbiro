@@ -36,7 +36,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         imageFile = File(pickedImage.path);
       });
-      Navigator.pop(context);
+      if (mounted) {
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -52,7 +54,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         imageFile = File(pickedImage.path);
       });
-      Navigator.pop(context);
+      if (mounted) {
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -61,13 +65,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
       LoadingDialog.showLoadingDialog(context);
       context.read<AuthBloc>().add(RegisterAuthEvent(usernameController.text,
           emailController.text, passwordController.text, imageFile!));
+
+      Navigator.pop(context);
+      Navigator.pop(context);
     }
 
     if (imageFile == null) {
       Fluttertoast.showToast(
           msg: "Iltimos profil uchun rasm yuklang",
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.SNACKBAR,
           timeInSecForIosWeb: 1,
           textColor: Colors.white,
           fontSize: 16.0);

@@ -30,7 +30,17 @@ class UsersFirebaseServices {
         "username": fullName,
         "email": email,
         "imageUrl": imageUrl,
+        "deniedEvents": [],
       });
     });
+  }
+
+  // Function to get user data by email
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserByEmail(
+      String email) async {
+    final querySnapshot =
+        await _usersCollection.where('email', isEqualTo: email).get();
+
+    return querySnapshot.docs.first;
   }
 }

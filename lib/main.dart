@@ -7,14 +7,18 @@ import 'package:tadbiro/data/repositories/user_repository.dart';
 import 'package:tadbiro/firebase_options.dart';
 import 'package:tadbiro/logic/blocs/auth/auth_bloc.dart';
 import 'package:tadbiro/logic/blocs/event/event_bloc.dart';
+import 'package:tadbiro/logic/blocs/user/user_bloc.dart';
 import 'package:tadbiro/services/auth_firebase_services.dart';
 import 'package:tadbiro/services/event_firebase_services.dart';
+import 'package:tadbiro/services/geolocator_service.dart';
 import 'package:tadbiro/services/users_firebase_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await GeolocatorService.init();
 
   // Initialize the services
   final AuthFirebaseServices authFirebaseServices = AuthFirebaseServices();
@@ -40,6 +44,9 @@ void main() async {
             return EventBloc(
               eventRepository: context.read<EventRepository>(),
             );
+          }),
+          BlocProvider(create: (context) {
+            return UserBloc(userRepository: context.read<UserRepository>());
           })
         ],
         child: const MainApp(),

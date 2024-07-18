@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
   String creatorId;
-  Timestamp date;
+  String date;
   String description;
   String imageUrl;
   String latitude;
@@ -26,7 +26,7 @@ class Event {
   });
 
   factory Event.fromFirestore(DocumentSnapshot doc) {
-    print(doc['latitude'].runtimeType);
+    // print(doc['date'].runtimeType);
     Map data = doc.data() as Map;
     return Event(
       creatorId: data['creatorId'] ?? '',

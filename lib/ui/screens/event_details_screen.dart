@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:lottie/lottie.dart';
+import 'package:lottie/lottie.dart' as lottie;
+import 'package:tadbiro/data/models/event.dart';
+import 'package:tadbiro/logic/blocs/user/user_bloc.dart';
 import 'package:tadbiro/utils/colors.dart';
 
 class EventDetailsScreen extends StatefulWidget {
@@ -12,14 +16,20 @@ class EventDetailsScreen extends StatefulWidget {
 }
 
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
-  static const LatLng _kMapCenter =
-      LatLng(19.018255973653343, 72.84793849278007);
-
-  static const CameraPosition _kInitialPosition =
-      CameraPosition(target: _kMapCenter, zoom: 11.0, tilt: 0, bearing: 0);
+  LatLng? selectedLocation;
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+
+    selectedLocation = LatLng(
+      double.parse(args['latitude']),
+      double.parse(
+        args['longitude'],
+      ),
+    );
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -34,9 +44,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               width: double.infinity,
               height: 250.h,
               decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: NetworkImage(
-                      "https://www.forevermogul.com/wp-content/uploads/2019/03/russia-moscow.png"),
+                image: DecorationImage(
+                  image: NetworkImage(args['imageUrl']),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.only(
@@ -77,9 +86,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    "Linux festival for Linuxers",
-                    style: TextStyle(
+                  Text(
+                    args['title'],
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -93,24 +102,21 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         width: 60.w,
                         height: 60.w,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(15.r),
                         ),
-                        child: const Icon(Icons.calendar_month),
+                        child: const Icon(
+                          Icons.calendar_month,
+                          color: Colors.white,
+                        ),
                       ),
                       SizedBox(
                         width: 10.w,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "14 Iyul, 2024",
-                            style: TextStyle(
-                                fontSize: 16.sp, fontWeight: FontWeight.w500),
-                          ),
-                          const Text("Yakshanba, 4:00PM-9:00PM")
-                        ],
+                      Text(
+                        args['date'],
+                        style: TextStyle(
+                            fontSize: 16.sp, fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
@@ -123,24 +129,21 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         width: 60.w,
                         height: 60.w,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(15.r),
                         ),
-                        child: const Icon(Icons.place),
+                        child: const Icon(
+                          Icons.place,
+                          color: Colors.white,
+                        ),
                       ),
                       SizedBox(
                         width: 10.w,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "14 Iyul, 2024",
-                            style: TextStyle(
-                                fontSize: 16.sp, fontWeight: FontWeight.w500),
-                          ),
-                          const Text("Yakshanba, 4:00PM-9:00PM")
-                        ],
+                      Text(
+                        args['location'],
+                        style: TextStyle(
+                            fontSize: 16.sp, fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
@@ -153,40 +156,63 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         width: 60.w,
                         height: 60.w,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(15.r),
                         ),
-                        child: const Icon(Icons.public),
+                        child: const Icon(
+                          Icons.public,
+                          color: Colors.white,
+                        ),
                       ),
                       SizedBox(
                         width: 10.w,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "14 Iyul, 2024",
-                            style: TextStyle(
-                                fontSize: 16.sp, fontWeight: FontWeight.w500),
-                          ),
-                          const Text("Yakshanba, 4:00PM-9:00PM")
-                        ],
+                      Text(
+                        (args['participants'] as List<Participant>)
+                            .length
+                            .toString(),
+                        style: TextStyle(
+                            fontSize: 16.sp, fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
                   SizedBox(
                     height: 20.h,
                   ),
-                  const Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"),
-                      ),
-                      title: Text("Alisher Zokirov"),
-                      subtitle: Text("Tadbir tashkilotchisi"),
-                    ),
-                  ),
+                  BlocBuilder<UserBloc, UserState>(
+                      bloc: context.read<UserBloc>()
+                        ..add(
+                          GetUserEvent(
+                            FirebaseAuth.instance.currentUser!.email!,
+                          ),
+                        ),
+                      builder: (context, state) {
+                        if (state is LoadingUserState) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (state is ErrorUserState) {
+                          return Center(
+                            child: Text(state.message),
+                          );
+                        }
+
+                        if (state is LoadedUsersState) {
+                          return Card(
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(state.user['imageUrl']),
+                              ),
+                              title: Text(state.user['username']),
+                              subtitle: const Text("Tadbir tashkilotchisi"),
+                            ),
+                          );
+                        }
+                        return const SizedBox();
+                      }),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -200,8 +226,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  const Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
+                  Text(
+                    args['description'],
                   ),
                   SizedBox(
                     height: 20.h,
@@ -216,8 +242,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  const Text(
-                    "Yoshlar ijod saroyi, Mustaqillik ko'chasi , Toshkent",
+                  Text(
+                    args['location'],
                   ),
                   SizedBox(
                     height: 10.h,
@@ -225,8 +251,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   SizedBox(
                     width: double.infinity,
                     height: 300.h,
-                    child: const GoogleMap(
-                      initialCameraPosition: _kInitialPosition,
+                    child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: selectedLocation!,
+                        zoom: 15,
+                      ),
+                      markers: {
+                        Marker(
+                          markerId: const MarkerId("location"),
+                          position: selectedLocation!,
+                          icon: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueRed),
+                        ),
+                      },
                     ),
                   ),
                   SizedBox(
@@ -435,7 +472,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    Lottie.asset(
+                                                    lottie.Lottie.asset(
                                                       'assets/lotties/success.json',
                                                       repeat: false,
                                                     ),

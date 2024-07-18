@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tadbiro/services/auth_firebase_services.dart';
 import 'package:tadbiro/services/users_firebase_services.dart';
 
@@ -23,6 +24,7 @@ abstract class InterfaceUserRepository {
     File imageFile,
   );
   Future<void> deleteUser(String id);
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserByEmail(String email);
 }
 
 class UserRepository implements InterfaceUserRepository {
@@ -63,4 +65,10 @@ class UserRepository implements InterfaceUserRepository {
 
   @override
   Future<void> deleteUser(String id) async {}
+
+  @override
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserByEmail(
+      String email) async {
+    return await usersFirebaseServices.getUserByEmail(email);
+  }
 }

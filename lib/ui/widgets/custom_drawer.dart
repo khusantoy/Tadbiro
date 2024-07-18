@@ -15,20 +15,19 @@ class _CustomDrawerState extends State<CustomDrawer> {
     return Drawer(
       child: Column(
         children: [
-          const DrawerHeader(
-            child: Center(
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"),
-                ),
-                title: Text("Alisher Zokirov"),
-                subtitle: Text("alisherzokirov@gmail.com"),
-              ),
-            ),
-          ),
           Column(
             children: [
+              SizedBox(
+                height: MediaQuery.of(context).viewPadding.top,
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, "/home");
+                },
+                leading: const Icon(Icons.home),
+                title: const Text("Bosh oyna"),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded),
+              ),
               ListTile(
                 onTap: () {
                   Navigator.pushNamed(context, "/events");
@@ -37,7 +36,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 title: const Text("Mening tadbirlarim"),
                 trailing: const Icon(Icons.arrow_forward_ios_rounded),
               ),
-              const ListTile(
+              ListTile(
+                onTap: () {
+                  Navigator.pushNamed(context, "/profile");
+                },
                 leading: Icon(Icons.person),
                 title: Text("Profil ma'lumotlari"),
                 trailing: Icon(Icons.arrow_forward_ios_rounded),
@@ -56,8 +58,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 onTap: () {
                   context.read<AuthBloc>().add(LogoutAuthEvent());
                 },
-                leading: const Icon(Icons.logout),
-                title: const Text("Chiqish"),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text(
+                  "Chiqish",
+                  style: TextStyle(color: Colors.red),
+                ),
               )
             ],
           ),
