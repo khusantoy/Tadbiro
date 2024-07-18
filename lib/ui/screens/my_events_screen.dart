@@ -14,7 +14,7 @@ class _MyEventsScreenState extends State<MyEventsScreen>
   late TabController tabController;
   @override
   void initState() {
-    tabController = TabController(length: 5, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
     tabController.addListener(() {
       setState(() {});
     });

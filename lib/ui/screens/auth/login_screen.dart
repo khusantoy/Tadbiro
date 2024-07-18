@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tadbiro/logic/blocs/auth/auth_bloc.dart';
 import 'package:tadbiro/ui/widgets/textformfield_item.dart';
 import 'package:tadbiro/utils/colors.dart';
@@ -93,8 +94,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, AppRoutes.resetPassword);
+                        onPressed: () async {
+                          final data = await Navigator.pushNamed(
+                              context, AppRoutes.resetPassword);
+
+                          if (data is bool && data) {
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Parolni tiklash uchun emailingizga xabar yuborildi",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }
                         },
                         child: const Text(
                           "Reset password?",

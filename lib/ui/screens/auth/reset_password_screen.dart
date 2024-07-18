@@ -26,6 +26,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         context
             .read<AuthBloc>()
             .add(ResetPasswordAuthEvent(textEditingController.text));
+        setState(() {
+          isSend = false;
+        });
+
+        Future.delayed(Duration(seconds: 2), () {
+          Navigator.pop(context, true);
+        });
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tadbiro/logic/blocs/auth/auth_bloc.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -49,6 +51,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 leading: Icon(Icons.light_mode),
                 title: Text("Tungi/Kunduzgi holat"),
                 trailing: Icon(Icons.arrow_forward_ios_rounded),
+              ),
+              ListTile(
+                onTap: () {
+                  context.read<AuthBloc>().add(LogoutAuthEvent());
+                },
+                leading: const Icon(Icons.logout),
+                title: const Text("Chiqish"),
               )
             ],
           ),
