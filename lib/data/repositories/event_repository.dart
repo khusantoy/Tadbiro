@@ -46,4 +46,8 @@ class EventRepository {
   Future<void> makeLiked(String id) async {
     await _eventFirebaseServices.makeLiked(id);
   }
+
+  Future<void> makeParticipant(String eventId, String amount) async {
+    await _eventFirebaseServices.makeParticipant(eventId, amount);
+  }
 }

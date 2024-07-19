@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart' as lottie;
 import 'package:tadbiro/data/models/event.dart';
+import 'package:tadbiro/logic/blocs/event/event_bloc.dart';
 import 'package:tadbiro/logic/blocs/user/user_bloc.dart';
 import 'package:tadbiro/utils/colors.dart';
 
@@ -17,6 +18,7 @@ class EventDetailsScreen extends StatefulWidget {
 
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
   LatLng? selectedLocation;
+  int amount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +74,18 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite_outline),
+                        onPressed: () {
+                          context
+                              .read<EventBloc>()
+                              .add(MakeLikedEvent(id: args['id']));
+                        },
+                        icon: Icon(
+                          Icons.favorite,
+                          color: args['likedUsers'].contains(
+                                  FirebaseAuth.instance.currentUser!.email)
+                              ? Colors.red
+                              : Colors.black,
+                        ),
                       ),
                     ),
                   ),
@@ -340,16 +352,20 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                         CircleAvatar(
                                           backgroundColor: Colors.white,
                                           child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              setState(() {
+                                                amount++;
+                                              });
+                                            },
                                             icon: const Icon(Icons.add),
                                           ),
                                         ),
                                         SizedBox(
                                           width: 10.w,
                                         ),
-                                        const Text(
-                                          "0",
-                                          style: TextStyle(
+                                        Text(
+                                          amount.toString(),
+                                          style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -360,7 +376,11 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                         CircleAvatar(
                                           backgroundColor: Colors.white,
                                           child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              setState(() {
+                                                amount--;
+                                              });
+                                            },
                                             icon: const Icon(Icons.remove),
                                           ),
                                         ),

@@ -6,12 +6,14 @@ class EventItemWidget extends StatefulWidget {
   final String imageUrl;
   final String date;
   final String location;
+  final Widget iconBtn;
   const EventItemWidget({
     super.key,
     required this.title,
     required this.imageUrl,
     required this.date,
     required this.location,
+    required this.iconBtn,
   });
 
   @override
@@ -70,10 +72,7 @@ class _EventItemWidgetState extends State<EventItemWidget> {
                             maxLines: 1,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.favorite_outline),
-                        )
+                        widget.iconBtn
                       ],
                     )
                   ],

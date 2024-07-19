@@ -29,3 +29,16 @@ final class MakeLikedEvent extends EventEvent {
 
   MakeLikedEvent({required this.id});
 }
+
+final class MakeParticipantEvent extends EventEvent {
+  String eventId;
+  String amount;
+
+  MakeParticipantEvent(this.eventId, this.amount);
+}
+
+class SearchCurrencyEvent extends EventEvent {
+  final String query;
+
+  SearchCurrencyEvent(this.query);
+}

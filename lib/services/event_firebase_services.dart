@@ -53,8 +53,62 @@ class EventFirebaseServices {
   }
 
   Future<void> makeLiked(String eventId) async {
-    print("----------------");
-    print(eventId);
-    print("----------------");
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser == null) {
+        print("No user is currently signed in.");
+        return;
+      }
+
+      String userEmail = currentUser.email!;
+      DocumentReference eventRef =
+          FirebaseFirestore.instance.collection('events').doc(eventId);
+      DocumentSnapshot eventSnapshot = await eventRef.get();
+
+      if (!eventSnapshot.exists) {
+        return;
+      }
+
+      List likedUsers = eventSnapshot.get('likedUsers') ?? [];
+
+      if (likedUsers.contains(userEmail)) {
+        likedUsers.remove(userEmail);
+      } else {
+        likedUsers.add(userEmail);
+      }
+
+      await eventRef.update({'likedUsers': likedUsers});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> makeParticipant(String eventId, String amount) async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      String userEmail = currentUser!.email!;
+      DocumentReference eventRef =
+          FirebaseFirestore.instance.collection('events').doc(eventId);
+      DocumentSnapshot eventSnapshot = await eventRef.get();
+
+      if (!eventSnapshot.exists) {
+        return;
+      }
+
+      List participants = eventSnapshot.get('participants') ?? [];
+
+      if (!participants.contains(userEmail)) {
+        participants.add({
+          "amount": amount,
+          "userId": userEmail,
+        });
+      }
+
+      await eventRef.update({'participants': participants});
+    } catch (e) {
+      print(e);
+    }
   }
 }

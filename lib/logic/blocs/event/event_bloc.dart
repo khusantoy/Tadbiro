@@ -16,6 +16,7 @@ class EventBloc extends Bloc<EventEvent, EventState> {
     on<GetEventsEvent>(_getEvents);
     on<AddEventEvent>(_addEvent);
     on<MakeLikedEvent>(_makeLiked);
+    on<MakeParticipantEvent>(_makeParticipant);
   }
 
   void _getEvents(GetEventsEvent event, Emitter<EventState> emit) async {
@@ -54,6 +55,17 @@ class EventBloc extends Bloc<EventEvent, EventState> {
 
     try {
       await _eventRepository.makeLiked(event.id);
+    } catch (e) {
+      emit(ErrorEventState(e.toString()));
+    }
+  }
+
+  Future<void> _makeParticipant(
+      MakeParticipantEvent event, Emitter<EventState> emit) async {
+    emit(LoadingEventState());
+
+    try {
+      await _eventRepository.makeParticipant(event.eventId, event.amount);
     } catch (e) {
       emit(ErrorEventState(e.toString()));
     }

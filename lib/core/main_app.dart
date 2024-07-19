@@ -44,9 +44,9 @@ class _MainAppState extends State<MainApp> {
         dark: ThemeData.dark(useMaterial3: true),
         initial: AdaptiveThemeMode.light,
         builder: (theme, darkTheme) => MaterialApp(
-          locale: AppLocalizations.supportedLocales[currentLang],
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
+          // locale: AppLocalizations.supportedLocales[currentLang],
+          // localizationsDelegates: AppLocalizations.localizationsDelegates,
+          // supportedLocales: AppLocalizations.supportedLocales,
           theme: theme,
           darkTheme: darkTheme,
           debugShowCheckedModeBanner: false,
