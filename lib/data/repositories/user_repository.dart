@@ -20,7 +20,7 @@ abstract class InterfaceUserRepository {
   Future<void> logout();
 
   Future<void> editUser(
-    String fullName,
+    String username,
     File imageFile,
   );
   Future<void> deleteUser(String id);
@@ -61,7 +61,9 @@ class UserRepository implements InterfaceUserRepository {
   }
 
   @override
-  Future<void> editUser(String fullName, File imageFile) async {}
+  Future<void> editUser(String username, File imageFile) async {
+    await usersFirebaseServices.editUser(username, imageFile);
+  }
 
   @override
   Future<void> deleteUser(String id) async {}

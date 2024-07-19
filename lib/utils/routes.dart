@@ -9,4 +9,5 @@ class AppRoutes {
   static const String addEvent = '/add-event';
   static const String map = '/map';
   static const String profile = '/profile';
+  static const String settings = '/settings';
 }

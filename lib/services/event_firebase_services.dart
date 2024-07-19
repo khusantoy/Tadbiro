@@ -51,4 +51,10 @@ class EventFirebaseServices {
       });
     });
   }
+
+  Future<void> makeLiked(String eventId) async {
+    print("----------------");
+    print(eventId);
+    print("----------------");
+  }
 }

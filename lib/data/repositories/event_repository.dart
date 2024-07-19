@@ -42,4 +42,8 @@ class EventRepository {
       location,
     );
   }
+
+  Future<void> makeLiked(String id) async {
+    await _eventFirebaseServices.makeLiked(id);
+  }
 }

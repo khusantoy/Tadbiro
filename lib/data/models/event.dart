@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
+  String id;
   String creatorId;
   String date;
   String description;
@@ -13,6 +14,7 @@ class Event {
   String title;
 
   Event({
+    required this.id,
     required this.creatorId,
     required this.date,
     required this.description,
@@ -29,6 +31,7 @@ class Event {
     // print(doc['date'].runtimeType);
     Map data = doc.data() as Map;
     return Event(
+      id: doc.id,
       creatorId: data['creatorId'] ?? '',
       date: data['date'] ?? Timestamp.now(),
       description: data['description'] ?? '',

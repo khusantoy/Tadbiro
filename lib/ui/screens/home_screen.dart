@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           ],
         ),
-        body: BlocBuilder(
+        body: BlocBuilder<EventBloc, EventState>(
           bloc: context.read<EventBloc>()..add(GetEventsEvent()),
           builder: (context, state) {
             if (state is LoadingEventState) {
@@ -172,7 +172,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               child: CircleAvatar(
                                                 backgroundColor: Colors.white,
                                                 child: IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    context
+                                                        .read<EventBloc>()
+                                                        .add(
+                                                          MakeLikedEvent(
+                                                              id: event.id)
+                                                        );
+                                                  },
                                                   icon: const Icon(
                                                       Icons.favorite_outline),
                                                 ),

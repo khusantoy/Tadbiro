@@ -23,3 +23,9 @@ final class AddEventEvent extends EventEvent {
     required this.location,
   });
 }
+
+final class MakeLikedEvent extends EventEvent {
+  final String id;
+
+  MakeLikedEvent({required this.id});
+}

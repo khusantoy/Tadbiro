@@ -40,19 +40,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 onTap: () {
                   Navigator.pushNamed(context, "/profile");
                 },
-                leading: Icon(Icons.person),
-                title: Text("Profil ma'lumotlari"),
-                trailing: Icon(Icons.arrow_forward_ios_rounded),
+                leading: const Icon(Icons.person),
+                title: const Text("Profil ma'lumotlari"),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded),
               ),
-              const ListTile(
-                leading: Icon(Icons.translate),
-                title: Text("Tilni o'zgartirish"),
-                trailing: Icon(Icons.arrow_forward_ios_rounded),
-              ),
-              const ListTile(
-                leading: Icon(Icons.light_mode),
-                title: Text("Tungi/Kunduzgi holat"),
-                trailing: Icon(Icons.arrow_forward_ios_rounded),
+              ListTile(
+                onTap: () {
+                  Navigator.pushNamed(context, "/settings");
+                },
+                leading: const Icon(Icons.settings),
+                title: const Text("Sozlamalar"),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded),
               ),
               ListTile(
                 onTap: () {

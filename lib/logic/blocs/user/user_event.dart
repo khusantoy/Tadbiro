@@ -7,3 +7,10 @@ final class GetUserEvent extends UserEvent {
 
   GetUserEvent(this.email);
 }
+
+final class EditUserEvent extends UserEvent {
+  final String? username;
+  final File? imageFile;
+
+  EditUserEvent(this.username, this.imageFile);
+}
