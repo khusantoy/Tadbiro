@@ -36,9 +36,3 @@ final class MakeParticipantEvent extends EventEvent {
 
   MakeParticipantEvent(this.eventId, this.amount);
 }
-
-class SearchCurrencyEvent extends EventEvent {
-  final String query;
-
-  SearchCurrencyEvent(this.query);
-}

@@ -17,9 +17,3 @@ final class ErrorEventState extends EventState {
 
   ErrorEventState(this.message);
 }
-
-class SearchedCurrencyState extends EventState {
-  final List<Event> currencies;
-
-  SearchedCurrencyState(this.currencies);
-}

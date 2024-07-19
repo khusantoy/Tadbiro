@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tadbiro/data/models/event.dart';
 import 'package:tadbiro/logic/blocs/event/event_bloc.dart';
 import 'package:tadbiro/ui/widgets/custom_drawer.dart';
 import 'package:tadbiro/ui/widgets/event_item_widget.dart';
@@ -16,27 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<EventBloc>().add(GetEventsEvent());
-    _searchController.addListener(
-        _onSearchChanged); // Listen for changes in the search field
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  void _onSearchChanged() {
-    final query = _searchController.text;
-    context.read<EventBloc>().add(SearchCurrencyEvent(query));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,14 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 return eventDate.isAfter(today) && eventDate.isBefore(nextWeek);
               }).toList();
 
-              List<Event> events = [];
-
-              if (state is LoadedEventsState) {
-                events = state.events;
-              } else if (state is SearchedCurrencyState) {
-                events = state.events;
-              }
-
               return state.events.isEmpty
                   ? const Center(
                       child: Text("Afsuski tadbirlar mavjud emas"),
@@ -99,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: EdgeInsets.only(
                                 left: 15.w, top: 15.h, right: 15.w),
                             child: TextFormField(
-                              controller: _searchController,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
                                 prefixIcon: const Icon(Icons.search),
@@ -154,6 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.pushNamed(context, "/details",
                                         arguments: {
+                                          "id" : event.id,
                                           "imageUrl": event.imageUrl,
                                           "title": event.title,
                                           "date": event.date,
@@ -163,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           "participants": event.participants,
                                           "creatorId": event.creatorId,
                                           "description": event.description,
-                                          "likedUsers": event.likedUsers,
+                                          "likedUsers": event.likedUsers
                                         });
                                   },
                                   child: Padding(
@@ -276,6 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.pushNamed(context, "/details",
                                         arguments: {
+                                          "id": event.id,
                                           "imageUrl": event.imageUrl,
                                           "title": event.title,
                                           "date": event.date,

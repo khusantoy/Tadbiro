@@ -481,6 +481,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                           ),
                                         ),
                                         onPressed: () {
+                                          context.read<EventBloc>().add(
+                                                MakeParticipantEvent(
+                                                    args['id'], "1"),
+                                              );
                                           showDialog(
                                             barrierDismissible: false,
                                             context: context,
